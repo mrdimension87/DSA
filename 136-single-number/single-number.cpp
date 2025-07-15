@@ -11,8 +11,8 @@ public:
                 return it.first;
             }
         }
-        return -1;
+        int s=-1;
+        return s;
     }
 
 };
-auto init = atexit([]() { ofstream("display_runtime.txt") << "0"; });
