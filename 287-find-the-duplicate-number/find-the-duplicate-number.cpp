@@ -5,9 +5,9 @@ public:
         map<int,int> counter;
         for(auto it: nums){
             counter[it]++;
-        }
-        for(auto it: counter){
-            if(it.second>1) return it.first;
+            if(counter[it]>1){
+                return it;
+            }
         }
         return -1;
     }
