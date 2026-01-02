@@ -1,11 +1,11 @@
 class Solution {
 public:
     const char findTheDifference(string s, string t) {
-        map<char,int>mp;
+        unordered_map<char,int>mp;
         for(auto it : s){
             mp[it]++;
         }
-        map<char,int> mp1;
+        unordered_map<char,int> mp1;
         for(auto it : t){
             mp1[it]++;
         }
