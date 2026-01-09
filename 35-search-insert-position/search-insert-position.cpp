@@ -14,10 +14,6 @@ public:
                 left=mid+1;
             }
         }
-        if(nums[(left+right)/2]>target){
-            return (left+right)/2;
-        }else{
-            return ((left+right)/2)+1;
-        }
+        return left;
     }
 };
