@@ -9,7 +9,7 @@ public:
         int max1=INT_MIN;
         for(int i=0; i<k; i++ ){
             if(arr[i]>max1){
-                max1=arr[i];
+                max1=arr[i];// damn machaya machaya
             }
         }
         for(int i=0; i<left.size(); i++){
