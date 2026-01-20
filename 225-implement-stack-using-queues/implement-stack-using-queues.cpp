@@ -3,7 +3,9 @@ private:
     queue<int> obj;
 
 public:
+    MyStack() {
 
+    }
 
     void push(int x) {
         int n = obj.size();
