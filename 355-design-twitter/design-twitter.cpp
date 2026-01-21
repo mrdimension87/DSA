@@ -11,8 +11,8 @@ private:
         }
     };
 
-    unordered_map<int, Tweet*> userHead;            // user -> head tweet
-    unordered_map<int, unordered_set<int>> follows; // follower -> followees
+    unordered_map<int, Tweet*> userHead;
+    unordered_map<int, unordered_set<int>> follows;
     int timer = 0;
 
 public:
@@ -20,31 +20,34 @@ public:
 
     void postTweet(int userId, int tweetId) {
         Tweet* t = new Tweet(tweetId, timer++);
-        t->next = userHead[userId];  // insert at head
+        t->next = userHead[userId];
         userHead[userId] = t;
     }
 
     vector<int> getNewsFeed(int userId) {
         vector<int> ans;
-        follows[userId].insert(userId); // follow self
+        follows[userId].insert(userId);
 
-        // max heap by time
-        auto cmp = [](Tweet* a, Tweet* b) {
-            return a->time < b->time;
-        };
-        priority_queue<Tweet*, vector<Tweet*>, decltype(cmp)> pq(cmp);
-
-        // add head tweet of each followed user
+        // store current pointer of each followed user
+        vector<Tweet*> curr;
         for (int f : follows[userId]) {
-            if (userHead[f]) pq.push(userHead[f]);
+            if (userHead[f]) curr.push_back(userHead[f]);
         }
 
-        // take top 10 most recent
-        while (!pq.empty() && ans.size() < 10) {
-            Tweet* t = pq.top();
-            pq.pop();
-            ans.push_back(t->id);
-            if (t->next) pq.push(t->next);
+        // pick max 10 tweets manually
+        for (int i = 0; i < 10; i++) {
+            int best = -1;
+            for (int j = 0; j < curr.size(); j++) {
+                if (!curr[j]) continue;
+                if (best == -1 || curr[j]->time > curr[best]->time) {
+                    best = j;
+                }
+            }
+
+            if (best == -1) break;
+
+            ans.push_back(curr[best]->id);
+            curr[best] = curr[best]->next; // move pointer forward
         }
 
         return ans;
