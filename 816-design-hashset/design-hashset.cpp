@@ -1,38 +1,66 @@
 class MyHashSet {
-private:
-    int bucketCount;
-    vector<list<int>> buckets;
-
-    int hash(int key) {
-        return key % bucketCount;
-    }
+public:    
+    struct ListNode {
+        int val;
+        ListNode* next;
+        ListNode(int x){
+            val=x;
+            next=nullptr;
+        }
+    };
 
 public:
+    ListNode* head = nullptr;
+
     MyHashSet() {
-        bucketCount = 769;   // prime number to reduce collisions
-        buckets.resize(bucketCount);
+        
     }
-
+    
     void add(int key) {
-        int idx = hash(key);
-        for (int x : buckets[idx]) {
-            if (x == key)
-                return; // already present
+        if(!contains(key)){
+            ListNode* dummy = new ListNode(key);
+            dummy->next = head;
+            head = dummy;
         }
-        buckets[idx].push_back(key);
     }
-
+    
     void remove(int key) {
-        int idx = hash(key);
-        buckets[idx].remove(key);
-    }
+        ListNode* curr = head;
+        ListNode* prev = nullptr;
 
+        while(curr!=nullptr){
+            if(curr->val == key){
+                if(prev == nullptr){
+                    head = curr->next;
+                }
+                else{
+                    prev->next = curr->next;
+                }
+
+                delete curr;
+                return;
+            }
+            prev = curr;
+            curr = curr->next;
+        }
+    }
+    
     bool contains(int key) {
-        int idx = hash(key);
-        for (int x : buckets[idx]) {
-            if (x == key)
+        ListNode* curr = head;
+        while(curr != nullptr){
+            if(curr->val == key){
                 return true;
+            }
+            curr=curr->next;
         }
         return false;
     }
 };
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet* obj = new MyHashSet();
+ * obj->add(key);
+ * obj->remove(key);
+ * bool param_3 = obj->contains(key);
+ */
