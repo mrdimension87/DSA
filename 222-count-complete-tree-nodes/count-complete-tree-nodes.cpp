@@ -15,7 +15,8 @@ public:
         if(root==nullptr){
             return 0;
         }
-        return 1 + count(root->left) + count(root->right);
+        int ans = 1 + count(root->left) + count(root->right);
+        return ans;
     }
     int countNodes(TreeNode* root) {
         int ans = count(root);
